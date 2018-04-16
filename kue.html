@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+</head>
+
+<body>
+	<div id="box">
+        <input type="text" v-model="greet">
+        <span>{{ message }}</span>
+        <span>, {{ people }} </span>
+        <a href="javascript:;" v-on:click='handleClick'>切换人名</a>
+    </div>
+
+	<script src="./js/observer.js"></script>
+	<script src="./js/watcher.js"></script>
+	<script src="./js/compile.js"></script>
+	<script src="./js/kue.js"></script>
+	<script>
+		var app = new Kue({
+			el: '#box',
+			data: {
+                greet : 'hi ',
+                people : 'Lily'
+            },
+            computed : {
+                message : function(){
+                    return this.greet + ' world';
+                }
+            },
+            methods : {
+                handleClick : function(){
+                    var people = ['Lily', 'Lucy', 'Lilei'];
+                    this.people = people[parseInt(Math.random() * 3)];
+                    console.log('click');
+                }
+            }
+		});
+    
+        app.$watch('word', function() {
+            console.log('watcher', arguments);
+        });
+
+        console.log(app);
+        
+	</script>
+
+</body>
+
+</html>
